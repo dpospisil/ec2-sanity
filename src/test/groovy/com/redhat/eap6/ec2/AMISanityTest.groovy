@@ -1,7 +1,3 @@
-//
-// Generated from archetype; please customize.
-//
-
 package com.redhat.eap6.ec2
 
 class AMISanityTest extends GroovyTestCase
@@ -17,8 +13,73 @@ class AMISanityTest extends GroovyTestCase
         assertTrue(ec2rpm.contains("standalone-mod_cluster-ec2-ha.xml"))
     }
 
-    void testYumCheck() {
-        assertEquals(0, execForExitValue("yum check all"))
+    
+    //void testYumCheck() {
+    //    println "yum check all."
+    //    println "**************"
+    //    assertEquals(0, execForExitValue("yum check all"))
+    //}
+    
+    void testJONAgentInstall() {
+        println "chkconfig --list jon-agent-ec2."
+        println "*******************************"
+        def out = execForOutput("chkconfig --list jon-agent-ec2")
+        println out
+        assertTrue(out.contains("jon-agent-ec2"))
+        assertFalse(out.containts(":on"))
+        
+        println "chkconfig --list jon-agent."
+        println "***************************"
+        out = execForOutput("chkconfig --list jon-agent")
+        println out
+        assertTrue(out.contains("jon-agent"))
+        assertFalse(out.containts(":on"))        
+    }
+    
+    void testCompareOldRelease() {
+        def oldVersion = System.properties["oldVersion"]
+        def arch = execForOutput("arch")
+
+        println "Comparing installed RPMs with previous version."
+        println "***********************************************"
+        
+        def out = execForOutput("rpm -qa --qf %{NAME}\\t%{VERSION}-%{release}\\t%{arch}\\n")        
+        
+        def installedPackages = [:]
+        out.eachLine { line ->
+            def columns = line.split()
+            installedPackages.put(columns[0], columns[1])
+        }
+        
+        println "Packages currently installed:" + installedPackages.count{key, value -> Boolean.TRUE}
+  
+        URL url = this.getClass().getResource("/jboss-eap-" + oldVersion + "-" + arch + ".txt");
+        File oldFile = new File(url.getFile()); 
+        
+        def oldPackages = [:]
+        oldFile.eachLine { line ->
+            def columns = line.split()
+            oldPackages.put(columns[0], columns[1])
+        }
+
+        println "Packages installed in previous version:" + oldPackages.count{key, value -> Boolean.TRUE}
+
+        def newPackages = []
+        installedPackages.each{ name, version -> 
+            if (! oldPackages.containsKey(name)) newPackages.add(name)
+        }        
+        println "New packages:"
+        newPackages.each{ name -> println name }
+        
+        def missingPackages = []
+        oldPackages.each{ name, version -> 
+            if (! installedPackages.containsKey(name)) missingPackages.add(name)
+        }        
+        println "Missing packages:"
+        missingPackages.each{ name -> println name }
+        
+        assert missingPackages.size()  == 0
+        
     }
     
     String execForOutput(cmd) {
