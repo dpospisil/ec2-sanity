@@ -14,11 +14,11 @@ class AMISanityTest extends GroovyTestCase
     }
 
     
-    //void testYumCheck() {
-    //    println "yum check all."
-    //    println "**************"
-    //    assertEquals(0, execForExitValue("yum check all"))
-    //}
+    void testYumCheck() {
+        println "yum check all."
+        println "**************"
+        assertEquals(0, execForExitValue("yum check all"))
+    }
     
     void testJONAgentInstall() {
         println "chkconfig --list jon-agent-ec2."
@@ -57,7 +57,6 @@ class AMISanityTest extends GroovyTestCase
         
         println "Packages currently installed:" + installedPackages.count{key, value -> Boolean.TRUE}
   
-        println "/jboss-eap-" + oldVersion + "-" + arch + ".txt"
         def stream = getClass().getResourceAsStream("/jboss-eap-" + oldVersion + "-" + arch + ".txt");
 	def oldFile = stream.getText();	
         
