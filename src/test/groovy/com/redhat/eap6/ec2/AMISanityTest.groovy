@@ -8,9 +8,10 @@ class AMISanityTest extends GroovyTestCase
 {
     
     void testJBossEC2_EAP_RPM() {
-        print "Testing jboss-ec2-eap RPM."
+        println "Testing jboss-ec2-eap RPM."
         def ec2rpm = exec("rpm -ql jboss-ec2-eap")
-
+        println "RPM content: " + ec2rpm
+        
         assertTrue(ec2rpm.contains("standalone-ec2-ha.xml"))
         assertTrue(ec2rpm.contains("standalone-mod_cluster-ec2-ha.xml"))
     }
