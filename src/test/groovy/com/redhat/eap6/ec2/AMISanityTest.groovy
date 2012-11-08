@@ -26,22 +26,26 @@ class AMISanityTest extends GroovyTestCase
         def out = execForOutput("chkconfig --list jon-agent-ec2")
         println out
         assertTrue(out.contains("jon-agent-ec2"))
-        assertFalse(out.containts(":on"))
+        assertFalse(out.contains(":on"))
         
         println "chkconfig --list jon-agent."
         println "***************************"
         out = execForOutput("chkconfig --list jon-agent")
         println out
         assertTrue(out.contains("jon-agent"))
-        assertFalse(out.containts(":on"))        
+        assertFalse(out.contains(":on"))        
     }
     
     void testCompareOldRelease() {
         def oldVersion = System.properties["oldVersion"]
-        def arch = execForOutput("arch")
+        
+        oldVersion = "6.0.0"
 
         println "Comparing installed RPMs with previous version."
         println "***********************************************"
+
+        def arch = execForOutput("arch").readLines()[0]
+        println "Detected architecture: " + arch
         
         def out = execForOutput("rpm -qa --qf %{NAME}\\t%{VERSION}-%{release}\\t%{arch}\\n")        
         
@@ -53,8 +57,9 @@ class AMISanityTest extends GroovyTestCase
         
         println "Packages currently installed:" + installedPackages.count{key, value -> Boolean.TRUE}
   
-        URL url = this.getClass().getResource("/jboss-eap-" + oldVersion + "-" + arch + ".txt");
-        File oldFile = new File(url.getFile()); 
+        println "/jboss-eap-" + oldVersion + "-" + arch + ".txt"
+        def stream = getClass().getResourceAsStream("/jboss-eap-" + oldVersion + "-" + arch + ".txt");
+	def oldFile = stream.getText();	
         
         def oldPackages = [:]
         oldFile.eachLine { line ->
