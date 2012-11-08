@@ -87,6 +87,7 @@ class AMISanityTest extends GroovyTestCase
     }
     
     String execForOutput(cmd) {
+        println "\$ " + cmd
         def proc = cmd.execute()
         proc.waitFor()
         assert proc.exitValue() == 0
@@ -94,6 +95,7 @@ class AMISanityTest extends GroovyTestCase
     }
     
     int execForExitValue(cmd) {
+        println "\$ " + cmd
         def proc = cmd.execute()
         proc.waitFor()
         return proc.exitValue()
