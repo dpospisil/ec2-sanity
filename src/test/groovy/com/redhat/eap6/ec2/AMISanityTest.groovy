@@ -32,4 +32,5 @@ class AMISanityTest extends GroovyTestCase
         def proc = cmd.execute()
         proc.waitFor()
         return proc.exitValue()
+    }
 }
