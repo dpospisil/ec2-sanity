@@ -104,7 +104,16 @@ class AMISanityTest extends GroovyTestCase
         }
         
         def stream = getClass().getResourceAsStream("/jboss-eap-" + currentVersion + "-" + arch + ".md5sums.txt");
-	def sumsFile = stream.getText();	        
+	def sumsFile = stream.getText();
+        
+        def sumPackages = [:]
+        sumsFile.eachLine { line ->
+            def fields = line.split('-')
+            def name = fields[0];
+            for (i in 0..(fields.size()-2)) {
+                    name = name + "-" + fields[i]
+            }
+        }
                 
         
     }
