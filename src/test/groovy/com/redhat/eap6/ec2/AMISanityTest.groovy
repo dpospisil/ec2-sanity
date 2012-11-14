@@ -37,9 +37,8 @@ class AMISanityTest extends GroovyTestCase
     }
     
     void testCompareOldRelease() {
-        def oldVersion = System.properties["oldVersion"]
-        
-        oldVersion = "6.0.0"
+        def oldVersion = System.properties["oldVersion"]        
+        if (oldVersion == null) oldVersion = "6.0.0"
 
         println "Comparing installed RPMs with previous version."
         println "***********************************************"
@@ -83,6 +82,30 @@ class AMISanityTest extends GroovyTestCase
         missingPackages.each{ name -> println name }
         
         assert missingPackages.size()  == 0
+     
+    }
+
+    void testCompareInstalledToRPMdist() {                
+        println "Comparing installed RPMs with RPM distribution."
+        println "***********************************************"
+        
+        def currentVersion = System.properties["currentVersion"]        
+        if (currentVersion == null) currentVersion = "6.0.1.ER3"
+
+        def arch = execForOutput("arch").readLines()[0]
+        println "Detected architecture: " + arch
+        
+        def out = execForOutput("rpm -qa --qf %{NAME}\\t%{VERSION}-%{release}\\t%{arch}\\n")        
+        
+        def installedPackages = [:]
+        out.eachLine { line ->
+            def columns = line.split()
+            installedPackages.put(columns[0], columns[1])
+        }
+        
+        def stream = getClass().getResourceAsStream("/jboss-eap-" + currentVersion + "-" + arch + ".md5sums.txt");
+	def sumsFile = stream.getText();	        
+                
         
     }
     
