@@ -17,7 +17,7 @@ class AMISanityTest extends GroovyTestCase
     void testYumCheck() {
         println "yum check all."
         println "**************"
-        //assertEquals(0, execForExitValue("yum check all"))
+        assertEquals(0, execForExitValue("yum check all"))
     }
     
     void testJONAgentInstall() {
