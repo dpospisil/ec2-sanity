@@ -131,7 +131,7 @@ class AMISanityTest extends GroovyTestCase
         
         def conflictingPackages = 0
         sumPackages.each{ name, version -> 
-                    if (! installedPackages.containsKey(name)) missingPackages.add(name) {
+                    if (! installedPackages.containsKey(name)) {
                         println "Package " + name + " not installed."
                     } else {
                         if (version == installedPackages.get(name)) {
