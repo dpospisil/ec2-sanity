@@ -117,7 +117,7 @@ class AMISanityTest extends GroovyTestCase
             def versionArch = fields[fields.size()-1]
             println "versionArch: " + versionArch
 
-            def verParts = versionArch.split('.')
+            def verParts = versionArch.split("\\.")
             def version = verParts[0];
             for (i in 1..(verParts.size()-2)) {
                     version = version + "." + verParts[i]
