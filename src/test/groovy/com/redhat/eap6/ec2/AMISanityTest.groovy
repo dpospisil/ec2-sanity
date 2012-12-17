@@ -109,7 +109,8 @@ class AMISanityTest extends GroovyTestCase
         def sumPackages = [:]
         sumsFile.eachLine { line ->
             println "Sum line: " + line
-            def fields = line.split('-')
+            def columns = line.split()
+            def fields = columns[1].split('-')
             def name = fields[0];
             for (i in 1..(fields.size()-2)) {
                     name = name + "-" + fields[i]
