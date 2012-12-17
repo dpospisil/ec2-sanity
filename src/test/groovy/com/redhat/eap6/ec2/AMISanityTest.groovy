@@ -120,7 +120,7 @@ class AMISanityTest extends GroovyTestCase
 
             def verParts = versionArch.split("\\.")
             def version = verParts[0];
-            for (i in 1..(verParts.size()-2)) {
+            for (i in 1..(verParts.size()-3)) {
                     version = version + "." + verParts[i]
             }            
             println "Adding sum package: " + name + " version: " + version
