@@ -112,10 +112,10 @@ class AMISanityTest extends GroovyTestCase
             def columns = line.split()
             def fields = columns[1].split('-')
             def name = fields[0];
-            for (i in 1..(fields.size()-2)) {
+            for (i in 1..(fields.size()-3)) {
                     name = name + "-" + fields[i]
             }
-            def versionArch = fields[fields.size()-1]
+            def versionArch = fields[fields.size()-2] + "-" + fields[fields.size()-1]
             println "versionArch: " + versionArch
 
             def verParts = versionArch.split("\\.")
