@@ -110,11 +110,34 @@ class AMISanityTest extends GroovyTestCase
         sumsFile.eachLine { line ->
             def fields = line.split('-')
             def name = fields[0];
-            for (i in 0..(fields.size()-2)) {
+            for (i in 1..(fields.size()-2)) {
                     name = name + "-" + fields[i]
             }
+            def versionArch = fields[fieds.size()-1]
+            def verParts = versionArch.split('.')
+            def version = verParts[0];
+            for (i in 1..(verParts.size()-2)) {
+                    version = version + "." + verParts[i]
+            }            
+            sumPackages.put(name, version)
         }
                 
+        println "Comparing RPM dist to installed packages:"
+        
+        def conflictingPackages = 0
+        sumPackages.each{ name, version -> 
+                    if (! installedPackages.containsKey(name)) missingPackages.add(name) {
+                        println "Package " + name + " not installed."
+                    } else {
+                        if (version == installedPackages.get(name)) {
+                            println "Package " + name + " version " + version + " OK."
+                        } else {
+                            println "Package " + name + " RPM version " + version + " conflicts with installed version " + installedPackages.get(name) + "."
+                            conflictingPackages ++
+                        }
+                    }
+                }        
+        assert conflictingPackages  == 0
         
     }
     
