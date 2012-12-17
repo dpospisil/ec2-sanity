@@ -108,7 +108,6 @@ class AMISanityTest extends GroovyTestCase
         
         def sumPackages = [:]
         sumsFile.eachLine { line ->
-            println "Sum line: " + line
             def columns = line.split()
             def fields = columns[1].split('-')
             def name = fields[0];
@@ -116,14 +115,12 @@ class AMISanityTest extends GroovyTestCase
                     name = name + "-" + fields[i]
             }
             def versionArch = fields[fields.size()-2] + "-" + fields[fields.size()-1]
-            println "versionArch: " + versionArch
 
             def verParts = versionArch.split("\\.")
             def version = verParts[0];
             for (i in 1..(verParts.size()-3)) {
                     version = version + "." + verParts[i]
             }            
-            println "Adding sum package: " + name + " version: " + version
             sumPackages.put(name, version)
         }
                 
