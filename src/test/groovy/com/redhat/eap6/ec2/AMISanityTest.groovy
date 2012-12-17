@@ -113,7 +113,7 @@ class AMISanityTest extends GroovyTestCase
             for (i in 1..(fields.size()-2)) {
                     name = name + "-" + fields[i]
             }
-            def versionArch = fields[fieds.size()-1]
+            def versionArch = fields[fields.size()-1]
             def verParts = versionArch.split('.')
             def version = verParts[0];
             for (i in 1..(verParts.size()-2)) {
