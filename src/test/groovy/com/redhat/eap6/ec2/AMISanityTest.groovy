@@ -122,6 +122,7 @@ class AMISanityTest extends GroovyTestCase
             for (i in 1..(verParts.size()-2)) {
                     version = version + "." + verParts[i]
             }            
+            println "Adding sum package: " + name + " version: " + version
             sumPackages.put(name, version)
         }
                 
