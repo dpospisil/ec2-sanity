@@ -3,6 +3,11 @@ package com.redhat.eap6.ec2
 class AMISanityTest extends GroovyTestCase
 {
     
+    /**
+     * Test that the jboss-ec2-eap package is installed
+     * and contains standalone-ec2-ha and standalone-mod_cluster-ec2-ha
+     * profiles.
+     */
     void testJBossEC2_EAP_RPM() {
         println "Testing jboss-ec2-eap RPM."
         println "**************************"
@@ -14,12 +19,19 @@ class AMISanityTest extends GroovyTestCase
     }
 
     
+    /**
+     * Executes yum check all and tests that it exists without an error.
+     * Refer to man yum for more details.
+     */
     void testYumCheck() {
         println "yum check all."
         println "**************"
         assertEquals(0, execForExitValue("yum check all"))
     }
     
+    /**
+     * Tests that the jon-agent services are installed and disabled.
+     */
     void testJONAgentInstall() {
         println "chkconfig --list jon-agent-ec2."
         println "*******************************"
@@ -35,7 +47,13 @@ class AMISanityTest extends GroovyTestCase
         assertTrue(out.contains("jon-agent"))
         assertFalse(out.contains(":on"))        
     }
-    
+
+    /**
+     * Compares list of installed EAP packages to packages present in previous
+     * AMI version. Asserts that there are no packages missing. Print out
+     * the list of new packages which were not present in previous version for
+     * manual inspection.
+     */
     void testCompareOldRelease() {
         def oldVersion = System.properties["oldVersion"]        
         if (oldVersion == null) oldVersion = "6.0.0"
@@ -85,6 +103,11 @@ class AMISanityTest extends GroovyTestCase
      
     }
 
+    /**
+     * Compares EAP rpms versions with the rpm list from RPM testing. Fails
+     * if any difference is found and print out offending package.
+     *
+     */
     void testCompareInstalledToRPMdist() {                
         println "Comparing installed RPMs with RPM distribution."
         println "***********************************************"
