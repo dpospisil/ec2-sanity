@@ -73,8 +73,10 @@ class AMISanityTest extends GroovyTestCase
         }
         
         println "Packages currently installed:" + installedPackages.count{key, value -> Boolean.TRUE}
-  
-        def stream = getClass().getResourceAsStream("/jboss-eap-" + oldVersion + "-" + arch + ".txt");
+
+        def oldVersionPath = "/jboss-eap-" + oldVersion + "-" + arch + ".txt";
+        println("reading old RPMs from: " + oldVersionPath);
+        def stream = getClass().getResourceAsStream(oldVersionPath);
 	def oldFile = stream.getText();	
         
         def oldPackages = [:]
