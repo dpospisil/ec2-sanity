@@ -137,7 +137,12 @@ class AMISanityTest extends GroovyTestCase
             def fields = columns[1].split('-')
             def name = fields[0];
             for (i in 1..(fields.size()-3)) {
-                    name = name + "-" + fields[i]
+               try {
+                  name = name + "-" + fields[i]
+               } catch (Exception e) {
+                  println("$line\n$columns\nfields");
+                  throw e;
+               }
             }
             def versionArch = fields[fields.size()-2] + "-" + fields[fields.size()-1]
 
