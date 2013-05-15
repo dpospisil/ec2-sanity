@@ -158,7 +158,6 @@ f28da3e53b072c0e1e7e8040187818d2  jbossws-common-tools-1.1.0-1.Final_redhat_1.ep
 1bf71fd798c293a55f98f0a6e03e49da  jgroups-3.2.7-1.Final_redhat_1.ep6.el6.noarch.rpm
 cbf0d6ca00c4866d60a0c1cbd98ae836  joda-time-1.6.2-5.redhat_4.ep6.el6.5.noarch.rpm
 c8549e177b103179ca821c73ff10ca94  jul-to-slf4j-stub-1.0.1-1.Final_redhat_1.1.ep6.el6.2.noarch.rpm
-cfc0a21bd129ecb0ef32168e117b5f12  MD5SUMS
 36cc302d8b2caac93db199440ac117a7  mod_cluster-1.2.4-1.Final_redhat_1.ep6.el6.noarch.rpm
 5f1d628f176cd0604419ce5eff24d956  mod_cluster-demo-1.2.4-1.Final_redhat_1.ep6.el6.noarch.rpm
 346f126c658c90166820a376b2ba082d  mod_cluster-native-1.2.4-1.Final.redhat_1.ep6.el6.x86_64.rpm

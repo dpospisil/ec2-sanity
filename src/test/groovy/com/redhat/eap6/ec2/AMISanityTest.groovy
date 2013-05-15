@@ -140,7 +140,7 @@ class AMISanityTest extends GroovyTestCase
                try {
                   name = name + "-" + fields[i]
                } catch (Exception e) {
-                  println("$line\n$columns\nfields");
+                  println("$line\n$columns\n$fields");
                   throw e;
                }
             }
